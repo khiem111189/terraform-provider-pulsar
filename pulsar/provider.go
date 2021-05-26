@@ -51,6 +51,18 @@ func Provider() terraform.ResourceProvider {
 				Default:     "1",
 				Description: descriptions["api_version"],
 			},
+			"tls_cert_file_path": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: descriptions["tls_cert_file_path"],
+				DefaultFunc: schema.EnvDefaultFunc("TLS_CERT_FILE_PATH", nil),
+			},
+			"tls_key_file_path": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: descriptions["tls_key_file_path"],
+				DefaultFunc: schema.EnvDefaultFunc("TLS_KEY_FILE_PATH", nil),
+			},
 			"tls_trust_certs_file_path": {
 				Type:        schema.TypeString,
 				Optional:    true,

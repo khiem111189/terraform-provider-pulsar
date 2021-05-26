@@ -51,17 +51,17 @@ func Provider() terraform.ResourceProvider {
 				Default:     "1",
 				Description: descriptions["api_version"],
 			},
-			"tls_cert_file_path": {
+			"tls_cert_file": {
 				Type:        schema.TypeString,
 				Optional:    true,
-				Description: descriptions["tls_cert_file_path"],
-				DefaultFunc: schema.EnvDefaultFunc("TLS_CERT_FILE_PATH", nil),
+				Description: descriptions["tls_cert_file"],
+				DefaultFunc: schema.EnvDefaultFunc("TLS_CERT_FILE", nil),
 			},
-			"tls_key_file_path": {
+			"tls_key_file": {
 				Type:        schema.TypeString,
 				Optional:    true,
-				Description: descriptions["tls_key_file_path"],
-				DefaultFunc: schema.EnvDefaultFunc("TLS_KEY_FILE_PATH", nil),
+				Description: descriptions["tls_key_file"],
+				DefaultFunc: schema.EnvDefaultFunc("TLS_KEY_FILE", nil),
 			},
 			"tls_trust_certs_file_path": {
 				Type:        schema.TypeString,
@@ -109,6 +109,8 @@ func providerConfigure(d *schema.ResourceData, tfVersion string) (interface{}, e
 	clusterURL := d.Get("web_service_url").(string)
 	token := d.Get("token").(string)
 	pulsarAPIVersion := d.Get("api_version").(string)
+	TLSCertFile := d.Get("tls_cert_file").(string)
+	TLSKeyFile := d.Get("tls_key_file").(string)
 	TLSTrustCertsFilePath := d.Get("tls_trust_certs_file_path").(string)
 	TLSAllowInsecureConnection := d.Get("tls_allow_insecure_connection").(bool)
 
@@ -121,6 +123,8 @@ func providerConfigure(d *schema.ResourceData, tfVersion string) (interface{}, e
 		WebServiceURL:              clusterURL,
 		Token:                      token,
 		PulsarAPIVersion:           common.APIVersion(apiVersion),
+		TLSCertFile:                TLSCertFile,
+		TLSKeyFile:                 TLSKeyFile,
 		TLSTrustCertsFilePath:      TLSTrustCertsFilePath,
 		TLSAllowInsecureConnection: TLSAllowInsecureConnection,
 	}
